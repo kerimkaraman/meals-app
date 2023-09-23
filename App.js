@@ -4,12 +4,11 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MealsOverviewScreen from "./screens/MealsOverviewScreen";
 import MealDetailScreen from "./screens/MealDetailScreen";
+import { Button } from "react-native";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const screenOptions = {};
-
   return (
     <>
       <StatusBar style="dark" />
@@ -28,7 +27,15 @@ export default function App() {
         >
           <Stack.Screen name="MealsCategories" component={CategoriesScreen} />
           <Stack.Screen name="MealsOverview" component={MealsOverviewScreen} />
-          <Stack.Screen name="MealDetailScreen" component={MealDetailScreen} />
+          <Stack.Screen
+            name="MealDetailScreen"
+            component={MealDetailScreen}
+            options={{
+              headerRight: () => {
+                return <Button title="Tap me" />;
+              },
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </>

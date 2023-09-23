@@ -1,11 +1,39 @@
-import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  ScrollView,
+  Platform,
+} from "react-native";
 import MealDetails from "../components/MealDetails";
 import { MEALS } from "../data/dummy-data";
+import Subtitle from "../components/MealDetail/Subtitle";
+import List from "../components/MealDetail/List";
+import { useLayoutEffect } from "react";
+import IconButton from "../components/IconButton";
 
-function MealDetailScreen({ route }) {
+function MealDetailScreen({ route, navigation }) {
   const mealId = route.params.mealId;
-
   const selectedMeal = MEALS.find((meal) => meal.id === mealId);
+
+  function headerButtonPressedHandler() {
+    console.log("pressed", Platform.OS);
+  }
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        return (
+          <IconButton
+            icon="star"
+            color="white"
+            onPress={headerButtonPressedHandler}
+          />
+        );
+      },
+    });
+  }, [navigation, headerButtonPressedHandler]);
 
   return (
     <ScrollView style={styles.rootContainer}>
@@ -19,18 +47,10 @@ function MealDetailScreen({ route }) {
       />
       <View style={styles.listOuterContainer}>
         <View style={styles.listContainer}>
-          <View style={styles.subtitleContainer}>
-            <Text style={styles.subtitle}>Ingredients</Text>
-          </View>
-          {selectedMeal.ingredients.map((ingredient) => {
-            return <Text key={ingredient}>{ingredient}</Text>;
-          })}
-          <View style={styles.subtitleContainer}>
-            <Text style={styles.subtitle}>Steps</Text>
-          </View>
-          {selectedMeal.steps.map((step) => {
-            return <Text key={step}>{step}</Text>;
-          })}
+          <Subtitle>Ingredients</Subtitle>
+          <List data={selectedMeal.ingredients} />
+          <Subtitle>Steps</Subtitle>
+          <List data={selectedMeal.steps} />
         </View>
       </View>
     </ScrollView>
@@ -62,19 +82,5 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     width: "80%",
-  },
-  subtitle: {
-    color: "#e2b497",
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  subtitleContainer: {
-    margin: 4,
-    padding: 6,
-    borderBottomColor: "#e2b497",
-    marginHorizontal: 24,
-    marginVertical: 4,
-    borderBottomWidth: 2,
   },
 });
