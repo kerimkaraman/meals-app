@@ -1,6 +1,6 @@
-# Movie App
+# Meals App
 
-Movie app allows you to get information about recently released and released films. It allows you to have information about the film you will watch by showing you information such as the actors who play in the films, information about the film, the scores resulting from the votes given by people. It offers suggestions according to film categories.
+Meals app that lists meals by category. I created this project when I trying to learn React Native.
 
 ## Screenshots
 
